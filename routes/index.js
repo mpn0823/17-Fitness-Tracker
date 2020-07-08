@@ -31,4 +31,8 @@ router.put('/api/workouts/:id', (req, res, next) => {
   );
 });
 
+router.get('/api/workouts/range', (req, res, next) =>
+  Workout.find().then(result => res.json(result.slice(0, 7))).catch(_ => res.status(400))
+);
+
 module.exports = router;
