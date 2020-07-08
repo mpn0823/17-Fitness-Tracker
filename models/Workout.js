@@ -22,6 +22,15 @@ const WorkoutSchema = new Schema({
     })]
 });
 
+WorkoutSchema.virtual("totalDuration").get(function () {
+    return this.exercises
+        .map(exercise => exercise.duration)
+        .reduce((a, b) => a + b);
+});
+
+// Sneaky, sneaky
+WorkoutSchema.set("toJSON", { virtuals: true });
+
 const Workout = mongoose.model("Workout", WorkoutSchema);
 
 module.exports = Workout;
