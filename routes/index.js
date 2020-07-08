@@ -18,10 +18,20 @@ router.get('/api/workouts', (req, res, next) =>
   Workout.find().then(result => res.json(result))
 );
 
-// Need to test this one once other routes are implemented
-router.post('/api/workouts', ({ body }, res, next) =>
-  Workout.insertMany(body).then(_ => res.sendStatus(200))
-);
+// need to catch errors
+router.post('/api/workouts', ({ body }, res, next) => {
+  new Workout(body).save((err, workout) => err ? res.status(400) : res.json(workout));
+});
+
+router.put('/api/workouts/:id', (req, res, next) => {
+  Workout.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $push: { exercises: req.body } },
+    (err, workout) => err ? res.status(400) : res.json(workout)
+  );
+});
+
+
 
 
 module.exports = router;
