@@ -3,13 +3,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-// const indexRouter = require('./routes/index');
+
 
 const app = express();
 
 // Mongoose config
 const mongoose = require('mongoose');
-const Workout = require('./models/Workout');
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/workout', {
     useNewUrlParser: true,
     useUnifiedTopology: true
